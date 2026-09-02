@@ -91,23 +91,29 @@ function Header() {
 function Hero() {
   const reducedMotion = useReducedMotion()
   const [offset, setOffset] = useState({ x: 0, y: 0 })
+  const [ready, setReady] = useState(false)
+
+  useEffect(() => {
+    const frame = window.requestAnimationFrame(() => setReady(true))
+    return () => window.cancelAnimationFrame(frame)
+  }, [])
+
   return (
-    <section id="home" className="hero">
-      <div className="hero__rule hero__rule--center" aria-hidden="true" />
-      <div className="hero__rule hero__rule--left" aria-hidden="true" />
-      <motion.div className="hero__art" aria-hidden="true" animate={reducedMotion ? undefined : { x: offset.x, y: offset.y }} transition={{ type: 'spring', stiffness: 38, damping: 20 }}>
-        <img src={orbArtwork} alt="" />
+    <section id="home" className="hero" onPointerMove={(event) => {
+      if (reducedMotion) return
+      setOffset({ x: (event.clientX / window.innerWidth - .5) * 28, y: (event.clientY / window.innerHeight - .5) * 20 })
+    }} onPointerLeave={() => setOffset({ x: 0, y: 0 })}>
+      <div className="hero__ambient hero__ambient--one" aria-hidden="true" />
+      <div className="hero__ambient hero__ambient--two" aria-hidden="true" />
+      <motion.div className="hero__art" aria-hidden="true" animate={reducedMotion ? undefined : { x: offset.x, y: offset.y }} transition={{ type: 'spring', stiffness: 30, damping: 18 }}>
+        <motion.img src={orbArtwork} alt="" initial={{ opacity: 0, scale: .78, rotate: -10 }} animate={ready ? (reducedMotion ? { opacity: 1, scale: 1, rotate: 0 } : { opacity: 1, scale: [1, 1.025, 1], rotate: [0, 2.5, 0] }) : undefined} transition={reducedMotion ? { duration: .8, ease: 'easeOut' } : { opacity: { duration: 1.35, ease: 'easeOut' }, scale: { duration: 8, repeat: Infinity, ease: 'easeInOut' }, rotate: { duration: 12, repeat: Infinity, ease: 'easeInOut' } }} />
       </motion.div>
-      <div className="hero__copy" onPointerMove={(event) => {
-        if (reducedMotion) return
-        setOffset({ x: (event.clientX / window.innerWidth - .5) * 16, y: (event.clientY / window.innerHeight - .5) * 14 })
-      }} onPointerLeave={() => setOffset({ x: 0, y: 0 })}>
+      <motion.div className="hero__copy" initial={{ opacity: 0, y: 48 }} animate={ready ? { opacity: 1, y: 0 } : undefined} transition={{ duration: .9, delay: .45, ease: [0.16, 1, 0.3, 1] }}>
         <h1><span>Design for people.</span><span>Results for business.</span></h1>
-        <p>Doris · UX Designer · 8 years experience</p>
-        <a href="#projects" aria-label="查看项目"><ArrowIcon size={25} /></a>
-      </div>
-      <div className="hero__side-note">用户洞察 / 体验策略 / 设计系统</div>
-      <a href="#projects" className="hero__scroll">Scroll to explore <ArrowDown size={17} strokeWidth={1.35} /></a>
+        <p>为真实的人梳理复杂体验，用设计帮助业务拿到结果。</p>
+      </motion.div>
+      <motion.div className="hero__identity" initial={{ opacity: 0, y: 26 }} animate={ready ? { opacity: 1, y: 0 } : undefined} transition={{ duration: .8, delay: .66, ease: [0.16, 1, 0.3, 1] }}><span>DORIS / UX DESIGNER</span><small>8 years of product design</small></motion.div>
+      <motion.a href="#projects" className="hero__scroll" aria-label="查看项目" initial={{ opacity: 0, scale: .86 }} animate={ready ? { opacity: 1, scale: 1 } : undefined} transition={{ duration: .6, delay: .86, ease: 'easeOut' }}><ArrowDown size={19} strokeWidth={1.2} /></motion.a>
     </section>
   )
 }
