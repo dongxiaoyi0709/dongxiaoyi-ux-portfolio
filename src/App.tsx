@@ -74,9 +74,18 @@ function Loader({ onDone }: { onDone: () => void }) {
 }
 
 function Header() {
+  const [scrolled, setScrolled] = useState(false)
   const navigate = (target: string) => document.getElementById(target)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+
+  useEffect(() => {
+    const update = () => setScrolled(window.scrollY > 32)
+    update()
+    window.addEventListener('scroll', update, { passive: true })
+    return () => window.removeEventListener('scroll', update)
+  }, [])
+
   return (
-    <header className="header">
+    <header className={'header' + (scrolled ? ' header--solid' : '')}>
       <a className="header__brand" href="#home" aria-label="Doris UX 首页">DORIS / UX</a>
       <nav className="header__nav" aria-label="网站导航">
         <button onClick={() => navigate('projects')} type="button">Works</button>
@@ -140,10 +149,11 @@ function Projects() {
   const [selected, setSelected] = useState<Project | null>(null)
   return <section id="projects" className="works">
     <div className="works__heading"><h2>Selected work</h2><span>01</span></div>
-    <div className="works__list">
-      {projects.map((project, index) => <motion.button className="work-strip" key={project.title} type="button" initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-120px' }} transition={{ duration: .65, delay: index * .03 }} onClick={() => setSelected(project)}>
-        <span className="work-strip__meta"><b>{String(index + 1).padStart(2, '0')}</b><strong>{project.title}</strong><small>{project.detail}</small></span>
-        <span className="work-strip__media"><img src={project.src} alt={project.title + '项目封面'} /><i><ArrowIcon size={26} /></i></span>
+    <div className="works__grid">
+      {projects.map((project, index) => <motion.button className="project-tile" key={project.title} type="button" initial={{ opacity: 0, y: 32 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-90px' }} transition={{ duration: .6, delay: index * .045 }} onClick={() => setSelected(project)} aria-label={'查看 ' + project.title + ' 项目详情'}>
+        <img src={project.src} alt={project.title + '项目封面'} />
+        <span className="project-tile__shade" aria-hidden="true" />
+        <span className="project-tile__arrow" aria-hidden="true"><ArrowIcon size={22} /></span>
       </motion.button>)}
     </div>
     <AnimatePresence>{selected && <ProjectDetail project={selected} onClose={() => setSelected(null)} />}</AnimatePresence>
