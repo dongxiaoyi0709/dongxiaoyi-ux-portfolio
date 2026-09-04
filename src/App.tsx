@@ -8,10 +8,46 @@ import './App.css'
 const VIDEO_SOURCE = 'https://stream.mux.com/Aa02T7oM1wH5Mk5EEVDYhbZ1ChcdhRsS2m1NYyx4Ua1g.m3u8'
 
 const projects = [
-  { company: '深圳美云集网络科技有限责任公司', title: '高级UI设计师', date: '2024.10 — 至今', focus: '跨境电商 ERP 与智能客服系统体验优化' },
-  { company: '广州视源电子科技股份有限公司', title: '高级UI设计师', date: '2021.04 — 2024.03', focus: '希沃白板「我的学校」Web 与 App 体验优化' },
-  { company: '厦门众智创库企业管理咨询有限公司', title: 'UI设计师', date: '2019.05 — 2021.04', focus: 'MBA 智库 App 2.0 体验与品牌视觉升级' },
-  { company: '在乎（厦门）信息技术有限公司', title: '视觉设计师', date: '2018.03 — 2019.05', focus: 'App、小程序、官网及品牌物料视觉设计' },
+  {
+    company: '深圳传音控股股份有限公司',
+    title: '高级 UI 设计师',
+    date: '2026.03 — 至今',
+    focus: 'AI Agent · 电商 ERP · AI 体验设计',
+    details: [
+      '负责 AI Agent 产品「Fika」及电商 ERP 系统「Kilistore」的体验优化设计。',
+      '将 AI 融入全流程设计，重新定义团队 AI 体验设计与产研协作流程。',
+    ],
+  },
+  {
+    company: '深圳美云集网络科技有限责任公司',
+    title: '高级 UI 设计师',
+    date: '2024.10 — 至今',
+    focus: '跨境电商 ERP · 智能客服 · 体验专项',
+    details: [
+      '负责跨境电商 ERP 系统「4Seller」及智能客服系统「多客」的体验优化设计。',
+      '围绕业务目标开展设计洞察与分析，完成多个体验专项，助力业务数据提升。',
+    ],
+  },
+  {
+    company: '广州视源电子科技股份有限公司',
+    title: '高级 UI 设计师',
+    date: '2021.04 — 2024.03',
+    focus: '希沃白板「我的学校」· Web & App · 设计系统',
+    details: [
+      '负责「希沃白板」“我的学校” Web 端与 App 端设计，把控设计输出质量并持续优化产品体验。',
+      '制定组件规范、跟进开发与视觉验收，配合程序封装，提升团队协作效率。',
+    ],
+  },
+  {
+    company: '厦门众智创库企业管理咨询有限公司',
+    title: 'UI 设计师',
+    date: '2019.05 — 2021.04',
+    focus: 'MBA 智库 App 2.0 · 体验升级 · 品牌视觉',
+    details: [
+      '负责「MBA 智库」App 2.0 的 UI 设计，完成各频道体验升级，提升产品转化与留存。',
+      '完成品牌视觉语言升级，统一设计风格并强化用户的品牌感知。',
+    ],
+  },
 ]
 
 const projectShowcases = [
@@ -33,10 +69,10 @@ function detailImagesFor(folder: string) {
 }
 
 const strengths = [
-  { number: '01', title: '全流程设计执行', description: '能从 0–1 独立负责全流程设计执行，具备数据分析、用户调研与场景链路分析能力，帮助业务拿结果。' },
-  { number: '02', title: 'B端与C端项目经验', description: '熟悉不同产品的设计发力点，能根据项目特性与用户群体差异，制定有效的设计策略。' },
-  { number: '03', title: '总结复盘与团队赋能', description: '善于输出并分享设计经验，喜欢研究心理学，并将其应用到实际设计之中。' },
-  { number: '04', title: '细节与交付品质', description: '对设计稿进行自查与像素级走查，推动前端精准还原，严格把控上线质量。' },
+  { number: '01', title: '全流程设计执行', description: '8 年设计经验，能从 0–1 独立负责全流程设计执行。' },
+  { number: '02', title: 'AI Coding 与组件体系', description: '熟练运用 AI Coding 完成方案探索与组件库搭建，并辅助前端样式实现、体验优化与数据分析。' },
+  { number: '03', title: '设计工程与 AI 协同', description: '具备设计工程思维，能定义团队 AI 体验设计与产研协作流程，提升交付效率与质量。' },
+  { number: '04', title: '审美与技术好奇', description: '审美能力在线，对新技术与新趋势保持好奇，始终热爱设计行业。' },
 ]
 
 function ArrowIcon() { return <ArrowUpRight size={15} strokeWidth={1.6} aria-hidden="true" /> }
@@ -83,30 +119,27 @@ function LoadingScreen({ onComplete }: { onComplete: () => void }) {
   </motion.div>
 }
 
-function Logo() { return <a className="logo" href="#home" aria-label="董晓艺主页"><span>晓</span></a> }
+function Logo() { return <a className="logo" href="#home" aria-label="Doris 主页"><span>DX</span></a> }
 
 function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
-  const [active, setActive] = useState('首页')
+  const [active, setActive] = useState('Home')
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 100)
     onScroll(); window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
-  const items = [{ label: '首页', target: 'home' }, { label: '经历', target: 'work' }, { label: '优势', target: 'advantages' }]
+  const items = [{ label: 'Home', target: 'home' }, { label: 'Work', target: 'projects' }, { label: 'Resume', target: 'work' }]
   const navigate = (label: string, target: string) => { setActive(label); document.getElementById(target)?.scrollIntoView({ behavior: 'smooth', block: 'start' }) }
   return <header className="nav-wrap"><nav className={`nav ${isScrolled ? 'nav--scrolled' : ''}`} aria-label="Primary navigation">
     <Logo /><span className="nav__divider nav__divider--first" /><div className="nav__links">{items.map((item) => <button key={item.label} className={`nav__link ${active === item.label ? 'nav__link--active' : ''}`} onClick={() => navigate(item.label, item.target)}>{item.label}</button>)}</div><span className="nav__divider" />
-    <a className="say-hi" href="#contact"><span>交流合作</span><ArrowIcon /></a>
+    <a className="say-hi" href="#contact"><span>Say hi</span><ArrowIcon /></a>
   </nav></header>
 }
 
 function Hero() {
-  const [roleIndex, setRoleIndex] = useState(0)
   const heroRef = useRef<HTMLElement>(null)
-  const roles = ['用户体验优化', 'B端与C端设计', '数据洞察驱动', '设计系统建设']
   const reducedMotion = useReducedMotion()
-  useEffect(() => { const interval = window.setInterval(() => setRoleIndex((current) => (current + 1) % roles.length), 2000); return () => window.clearInterval(interval) }, [roles.length])
   useLayoutEffect(() => {
     if (reducedMotion || !heroRef.current) return
     const context = gsap.context(() => {
@@ -118,8 +151,15 @@ function Hero() {
   }, [reducedMotion])
   return <section id="home" className="hero-section" ref={heroRef}>
     <CinematicVideo className="hero-section__video" /><div className="hero-section__veil" /><div className="hero-section__fade" />
-    <div className="hero-section__content"><p className="section-label blur-in">UX 设计师 · 8年工作经验</p><h1 className="hero-section__name name-reveal">Hi, I&apos;m Doris</h1><p className="hero-section__role">专注于 <span key={roles[roleIndex]} className="hero-section__role-word">{roles[roleIndex]}</span></p><p className="hero-section__description blur-in">具备数据分析、用户调研与全流程设计执行能力，帮助业务拿结果。</p><div className="hero-section__actions blur-in"><a className="button button--solid" href="#work">查看工作经历 <ArrowIcon /></a><a className="button button--outline" href="#advantages">个人优势 <ArrowIcon /></a></div></div>
-    <a className="scroll-indicator" href="#work"><span>向下探索</span><span className="scroll-indicator__line"><i /></span></a>
+    <div className="hero-section__content">
+      <p className="hero-section__edition blur-in"><span aria-hidden="true" /><b>UX PORTFOLIO · 2026</b><span aria-hidden="true" /></p>
+      <h1 className="hero-section__name name-reveal">Doris Dong</h1>
+      <p className="hero-section__role blur-in">A UX designer building AI-native product experiences.</p>
+      <div className="hero-section__divider blur-in" aria-hidden="true"><span /><i /><span /></div>
+      <p className="hero-section__description blur-in">8 years across AI Agent, cross-border e-commerce, education and knowledge products.</p>
+      <div className="hero-section__actions blur-in"><a className="button button--solid" href="#projects">See work <ArrowIcon /></a><a className="button button--outline" href="#contact">Reach out... <ArrowIcon /></a></div>
+    </div>
+    <a className="scroll-indicator" href="#projects" aria-label="查看项目"><span className="scroll-indicator__orb"><i /></span><span>Scroll</span></a>
   </section>
 }
 
@@ -128,7 +168,7 @@ function SectionTitle({ eyebrow, title, subtext, action }: { eyebrow: string; ti
 }
 
 function Works() {
-  return <section id="work" className="content-section works-section"><SectionTitle eyebrow="Professional Experience" title={<>工作<em>经历</em></>} subtext="8 年 UX 设计经验，覆盖跨境电商、教育产品、知识服务与多端品牌体验。" action="4 段经历" /><div className="experience-timeline">{projects.map((project, index) => <motion.article key={project.company} className="timeline-entry" initial={{ opacity: 0, y: 26 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: .6, delay: index * .08 }} viewport={{ once: true, margin: '-60px' }}><time className="timeline-entry__date">{project.date}</time><span className="timeline-entry__marker" aria-hidden="true"><i /></span><div className="timeline-entry__content"><p>{project.company}</p><h3>{project.title}</h3><span>{project.focus}</span></div></motion.article>)}</div></section>
+  return <section id="work" className="content-section works-section"><SectionTitle eyebrow="Professional Experience" title={<>工作<em>经历</em></>} subtext="8 年 UX 设计经验，聚焦 AI Agent、跨境电商、教育产品与知识服务。" action="4 段经历" /><div className="experience-timeline">{projects.map((project, index) => <motion.article key={project.company} className="timeline-entry" initial={{ opacity: 0, y: 26 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: .6, delay: index * .08 }} viewport={{ once: true, margin: '-60px' }}><time className="timeline-entry__date">{project.date}</time><span className="timeline-entry__marker" aria-hidden="true"><i /></span><div className="timeline-entry__content"><p>{project.company}</p><h3>{project.title}</h3><span className="timeline-entry__focus">{project.focus}</span><ul className="timeline-entry__details">{project.details.map((detail) => <li key={detail}>{detail}</li>)}</ul></div></motion.article>)}</div></section>
 }
 
 function ProjectDetail({ project, onClose }: { project: (typeof projectShowcases)[number]; onClose: () => void }) {
@@ -150,7 +190,7 @@ function ProjectShowcase() {
 }
 
 function Journal() {
-  return <section id="advantages" className="content-section journal-section"><SectionTitle eyebrow="Core Strengths" title={<>个人<em>优势</em></>} subtext="以洞察、策略与细节建立能落地的体验，让设计真正服务于业务目标。" action="UX 能力" /><div className="journal-list">{strengths.map((strength, index) => <motion.article key={strength.number} className="journal-entry" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: .5, delay: index * .06 }} viewport={{ once: true }}><span className="journal-entry__number">{strength.number}</span><span className="journal-entry__title">{strength.title}</span><span className="journal-entry__meta">{strength.description}</span><ArrowIcon /></motion.article>)}</div></section>
+  return <section id="advantages" className="content-section journal-section"><SectionTitle eyebrow="Core Strengths" title={<>个人<em>优势</em></>} subtext="从全流程设计到 AI 协同，让策略、体验与交付保持同一节奏。" action="UX 能力" /><div className="journal-list">{strengths.map((strength, index) => <motion.article key={strength.number} className="journal-entry" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: .5, delay: index * .06 }} viewport={{ once: true }}><span className="journal-entry__number">{strength.number}</span><span className="journal-entry__title">{strength.title}</span><span className="journal-entry__meta">{strength.description}</span><ArrowIcon /></motion.article>)}</div></section>
 }
 
 function Stats() {
