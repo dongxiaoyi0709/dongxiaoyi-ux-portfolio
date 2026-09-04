@@ -193,7 +193,7 @@ function ProjectShowcase() {
 }
 
 function Journal() {
-  return <section id="advantages" className="content-section journal-section"><SectionTitle eyebrow="Core Strengths" title={<>个人<em>优势</em></>} subtext="从全流程设计到 AI 协同，让策略、体验与交付保持同一节奏。" action="UX 能力" /><div className="journal-list">{strengths.map((strength, index) => <motion.article key={strength.number} className="journal-entry" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: .5, delay: index * .06 }} viewport={{ once: true }}><span className="journal-entry__number">{strength.number}</span><span className="journal-entry__title">{strength.title}</span><span className="journal-entry__meta">{strength.description}</span><ArrowIcon /></motion.article>)}</div></section>
+  return <section id="advantages" className="content-section journal-section"><SectionTitle eyebrow="Core Strengths" title={<>个人<em>优势</em></>} subtext="从全流程设计到 AI 协同，让策略、体验与交付保持同一节奏。" action="UX 能力" /><div className="journal-list">{strengths.map((strength, index) => <motion.article key={strength.number} className="journal-entry" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: .5, delay: index * .06 }} viewport={{ once: true }}><span className="journal-entry__number">{strength.number}</span><span className="journal-entry__title">{strength.title}</span><span className="journal-entry__meta">{strength.description}</span></motion.article>)}</div></section>
 }
 
 function Stats() {
