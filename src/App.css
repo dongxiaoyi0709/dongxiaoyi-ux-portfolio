@@ -111,14 +111,12 @@
   .scroll-indicator__orb i { width: 1.4rem; height: 1.4rem; }
 }
 
-.timeline-entry__focus { display: block; }.timeline-entry__details { display: grid; gap: .38rem; margin: .9rem 0 0; padding: 0; list-style: none; }.timeline-entry__details li { display: grid; grid-template-columns: .7rem minmax(0, 1fr); gap: .28rem; color: hsl(var(--text) / .58); font-size: .75rem; font-weight: 300; line-height: 1.65; }.timeline-entry__details li::before { color: #89AACC; content: '•'; }
+.timeline-entry__details { display: grid; gap: .38rem; margin: .65rem 0 0; padding: 0; list-style: none; }.timeline-entry__details li { display: grid; grid-template-columns: .7rem minmax(0, 1fr); gap: .28rem; color: hsl(var(--text) / .58); font-size: .75rem; font-weight: 300; line-height: 1.65; }.timeline-entry__details li::before { color: #89AACC; content: '•'; }
 
 @media (max-width: 720px) { .timeline-entry__details { margin-top: .72rem; gap: .32rem; }.timeline-entry__details li { font-size: .7rem; line-height: 1.58; } }
 
 /* Work section typography follows the requested clean, left-aligned sans-serif treatment. */
 #work .section-title > div { text-align: left; }
-#work .section-label--with-line { gap: 0; }
-#work .section-label--with-line > span { display: none; }
 #work .section-title h2,
 #work .section-title h2 em { font-family: var(--font-body); font-style: normal; font-weight: 300; }
 
