@@ -119,3 +119,12 @@
 #work .section-label--with-line > span { display: none; }
 #work .section-title h2,
 #work .section-title h2 em { font-family: var(--font-body); font-style: normal; font-weight: 300; }
+
+/* Experience hierarchy: company first, role second. */
+#work .timeline-entry__content > p { margin-bottom: .42rem; color: hsl(var(--text) / .94); font-size: clamp(1rem, 1.6vw, 1.22rem); font-weight: 550; letter-spacing: -.025em; line-height: 1.35; }
+#work .timeline-entry__content > h3 { margin-bottom: .62rem; color: hsl(var(--text) / .52); font-size: .82rem; font-weight: 400; letter-spacing: .02em; line-height: 1.45; }
+
+@media (max-width: 720px) {
+  #work .timeline-entry__content > p { font-size: .96rem; }
+  #work .timeline-entry__content > h3 { font-size: .76rem; }
+}
