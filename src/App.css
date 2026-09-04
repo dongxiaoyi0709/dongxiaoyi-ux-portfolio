@@ -35,6 +35,7 @@
 @media (max-width: 720px) { .project-detail__bar { min-height: 4.25rem; padding: 0 1.25rem; }.project-detail__intro { padding: 4rem 1.25rem 2.25rem; }.project-detail__intro h2 { font-size: clamp(2.45rem, 12vw, 3.6rem); }.project-detail__gallery { gap: .5rem; padding: 0 .75rem 4rem; }.project-detail__gallery img { border-radius: .55rem; } }
 
 .contact-section__content h2 em { font-family: inherit; font-size: inherit; font-style: normal; font-weight: inherit; }.contact-details { gap: 1.8rem; }.contact-detail { min-height: auto; gap: .55rem; padding: .25rem 0; border: 0; border-radius: 0; background: transparent; backdrop-filter: none; transition: color .24s ease, opacity .24s ease; }.contact-detail:hover { border-color: transparent; background: transparent; color: #b7d6f3; transform: none; }.contact-detail strong { font-weight: 400; }.contact-detail svg { width: 1rem; height: 1rem; color: #b7d6f3; }
+.contact-qr { display: block; width: min(454px, calc(100vw - 2.5rem)); height: auto; margin-top: 2rem; border-radius: 1.25rem; box-shadow: 0 1.5rem 4rem rgba(0,0,0,.32); }
 
 @media (max-width: 720px) { .contact-details { width: auto; flex-direction: row; gap: 1.25rem; }.contact-detail { justify-content: initial; } }
 

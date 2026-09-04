@@ -3,6 +3,7 @@ import Hls from 'hls.js'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { ArrowUpRight, Mail, Phone, X } from 'lucide-react'
 import { gsap } from 'gsap'
+import contactWechatQr from './assets/contact-wechat-qr.png'
 import './App.css'
 
 const VIDEO_SOURCE = 'https://stream.mux.com/Aa02T7oM1wH5Mk5EEVDYhbZ1ChcdhRsS2m1NYyx4Ua1g.m3u8'
@@ -202,7 +203,7 @@ function Stats() {
 
 function Contact() {
   const marquee = Array.from({ length: 10 }, () => 'DESIGN FOR RESULTS •').join(' ')
-  return <footer id="contact" className="contact-section"><CinematicVideo className="contact-section__video" /><div className="contact-section__veil" /><div className="contact-section__marquee" aria-hidden="true"><span>{marquee}</span><span>{marquee}</span></div><div className="contact-section__content"><h2>用设计，帮助业务 <em>拿结果。</em></h2><div className="contact-details" aria-label="联系方式"><a className="contact-detail" href="tel:15606929798" aria-label="致电 156 0692 9798"><Phone aria-hidden="true" /><strong>156 0692 9798</strong></a><a className="contact-detail" href="mailto:1021517054@qq.com" aria-label="发送邮件至 1021517054@qq.com"><Mail aria-hidden="true" /><strong>1021517054@qq.com</strong></a></div></div></footer>
+  return <footer id="contact" className="contact-section"><CinematicVideo className="contact-section__video" /><div className="contact-section__veil" /><div className="contact-section__marquee" aria-hidden="true"><span>{marquee}</span><span>{marquee}</span></div><div className="contact-section__content"><h2>用设计，帮助业务 <em>拿结果。</em></h2><div className="contact-details" aria-label="联系方式"><a className="contact-detail" href="tel:15606929798" aria-label="致电 156 0692 9798"><Phone aria-hidden="true" /><strong>156 0692 9798</strong></a><a className="contact-detail" href="mailto:1021517054@qq.com" aria-label="发送邮件至 1021517054@qq.com"><Mail aria-hidden="true" /><strong>1021517054@qq.com</strong></a></div><img className="contact-qr" src={contactWechatQr} alt="董晓艺的微信二维码" /></div></footer>
 }
 
 function App() {
