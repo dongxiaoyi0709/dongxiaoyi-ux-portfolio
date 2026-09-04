@@ -181,7 +181,7 @@ function ProjectDetail({ project, onClose }: { project: (typeof projectShowcases
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
   }, [onClose])
-  return <motion.article className="project-detail" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} role="dialog" aria-modal="true" aria-label={`${project.title}项目详情`}><header className="project-detail__bar"><button type="button" onClick={onClose} aria-label="关闭项目详情"><X size={18} /><span>关闭详情</span></button><p>{project.brand}</p></header><div className="project-detail__intro"><p className="section-label">Project Case Study</p><h2>{project.title}</h2><p>{project.detail}</p><span>{images.length} 个设计画面</span></div><div className="project-detail__gallery">{images.map((source, index) => <img key={source} src={source} alt={`${project.title}设计画面 ${index + 1}`} loading={index < 2 ? 'eager' : 'lazy'} decoding="async" />)}</div></motion.article>
+  return <motion.article className="project-detail" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} role="dialog" aria-modal="true" aria-label={`${project.title}项目详情`}><header className="project-detail__bar"><button type="button" onClick={onClose} aria-label="关闭项目详情"><X size={18} /><span>关闭详情</span></button><p>{project.brand}</p></header><div className="project-detail__intro"><p className="section-label">Project Case Study</p><h2>{project.title}</h2><p>{project.detail}</p></div><div className="project-detail__gallery">{images.map((source, index) => <img key={source} src={source} alt={`${project.title}设计画面 ${index + 1}`} loading={index < 2 ? 'eager' : 'lazy'} decoding="async" />)}</div></motion.article>
 }
 
 function ProjectShowcase() {
