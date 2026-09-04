@@ -4,9 +4,20 @@ import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { ArrowUpRight, Mail, Phone, X } from 'lucide-react'
 import { gsap } from 'gsap'
 import contactWechatQr from './assets/contact-wechat-qr.png'
+import sharingPhoto1 from './assets/design-sharing/1.png'
+import sharingPhoto2 from './assets/design-sharing/2.png'
+import sharingPhoto3 from './assets/design-sharing/3.png'
+import sharingPhoto4 from './assets/design-sharing/4.png'
 import './App.css'
 
 const VIDEO_SOURCE = 'https://stream.mux.com/Aa02T7oM1wH5Mk5EEVDYhbZ1ChcdhRsS2m1NYyx4Ua1g.m3u8'
+
+const sharingPhotos = [
+  { src: sharingPhoto1, alt: '希沃信鸽设计分享现场' },
+  { src: sharingPhoto2, alt: 'AIGC 主题设计分享现场' },
+  { src: sharingPhoto3, alt: '集体详情项目复盘分享现场' },
+  { src: sharingPhoto4, alt: '设计经验总结分享现场' },
+]
 
 const projects = [
   {
@@ -196,6 +207,10 @@ function Journal() {
   return <section id="advantages" className="content-section journal-section"><SectionTitle eyebrow="Core Strengths" title={<>个人<em>优势</em></>} subtext="从全流程设计到 AI 协同，让策略、体验与交付保持同一节奏。" action="UX 能力" /><div className="journal-list">{strengths.map((strength, index) => <motion.article key={strength.number} className="journal-entry" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: .5, delay: index * .06 }} viewport={{ once: true }}><span className="journal-entry__number">{strength.number}</span><span className="journal-entry__title">{strength.title}</span><span className="journal-entry__meta">{strength.description}</span></motion.article>)}</div></section>
 }
 
+function DesignSharing() {
+  return <section id="sharing" className="content-section sharing-section"><SectionTitle eyebrow="Design Sharing" title={<>设计<em>分享</em></>} subtext="有价值的经验总结，为团队赋能" /><div className="sharing-gallery">{sharingPhotos.map((photo, index) => <motion.figure key={photo.src} className="sharing-photo" initial={{ opacity: 0, y: 22 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: .55, delay: index * .07 }} viewport={{ once: true, margin: '-60px' }}><img src={photo.src} alt={photo.alt} /></motion.figure>)}</div></section>
+}
+
 function Stats() {
   const stats = [{ value: '8+', label: '年 UX 设计经验' }, { value: '4', label: '段完整工作经历' }, { value: 'B / C', label: '端项目设计经验' }]
   return <section id="stats" className="stats-section"><div className="stats-section__inner">{stats.map((stat, index) => <motion.div key={stat.label} initial={{ opacity: 0, y: 22 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: .6, delay: index * .1 }} viewport={{ once: true }}><p>{stat.value}</p><span>{stat.label}</span></motion.div>)}</div></section>
@@ -208,7 +223,7 @@ function Contact() {
 
 function App() {
   const [isLoading, setIsLoading] = useState(true)
-  return <><AnimatePresence>{isLoading && <LoadingScreen onComplete={() => setIsLoading(false)} />}</AnimatePresence><Navbar /><main><Hero /><Works /><ProjectShowcase /><Journal /><Stats /></main><Contact /></>
+  return <><AnimatePresence>{isLoading && <LoadingScreen onComplete={() => setIsLoading(false)} />}</AnimatePresence><Navbar /><main><Hero /><Works /><ProjectShowcase /><DesignSharing /><Journal /><Stats /></main><Contact /></>
 }
 
 export default App
