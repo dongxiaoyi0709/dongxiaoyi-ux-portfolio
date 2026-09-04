@@ -21,7 +21,7 @@ const projects = [
   {
     company: '深圳美云集网络科技有限责任公司',
     title: '高级 UI 设计师',
-    date: '2024.10 — 至今',
+    date: '2024.10 — 2026.03',
     focus: '跨境电商 ERP · 智能客服 · 体验专项',
     details: [
       '负责跨境电商 ERP 系统「4Seller」及智能客服系统「多客」的体验优化设计。',
