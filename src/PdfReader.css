@@ -1,0 +1,25 @@
+.pdf-reader__status--error {
+  align-content: center;
+  gap: 1rem;
+}
+
+.pdf-reader__status--error p {
+  margin: 0;
+}
+
+.pdf-reader__retry {
+  padding: 0.65rem 1rem;
+  border: 1px solid rgb(120 167 247 / 55%);
+  border-radius: 999px;
+  color: #f7f9fc;
+  background: rgb(25 53 94 / 72%);
+  font: inherit;
+  letter-spacing: 0.04em;
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+
+.pdf-reader__retry:hover {
+  border-color: #78a7f7;
+  background: rgb(36 73 126 / 85%);
+  transform: translateY(-1px);
+}
