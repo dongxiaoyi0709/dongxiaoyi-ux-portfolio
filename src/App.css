@@ -146,3 +146,24 @@
 .contact-section__video { filter: grayscale(1) sepia(.9) hue-rotate(162deg) saturate(3.1) contrast(1.12) brightness(.68); }
 .contact-section__veil { overflow: hidden; background: linear-gradient(180deg, rgba(1,9,34,.28), rgba(1,8,30,.48) 62%, rgba(1,7,23,.74)); }
 .contact-section__veil::after { position: absolute; inset: -28%; background: radial-gradient(ellipse at 48% 86%, rgba(51,151,255,.43), transparent 31%), radial-gradient(ellipse at 82% 22%, rgba(35,102,230,.24), transparent 30%); content: ''; filter: blur(24px); mix-blend-mode: screen; opacity: .7; animation: hero-blue-drift 13s ease-in-out infinite alternate-reverse; }
+
+/* Keep design-sharing cards aligned with the project grid at every breakpoint. */
+.sharing-articles { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
+
+@media (max-width: 1024px) {
+  .sharing-articles { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (max-width: 720px) {
+  .sharing-articles {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-columns: initial;
+    grid-auto-flow: row;
+    gap: .75rem;
+    overflow-x: visible;
+    padding-bottom: 0;
+    scroll-snap-type: none;
+  }
+
+  .sharing-article { scroll-snap-align: none; }
+}
