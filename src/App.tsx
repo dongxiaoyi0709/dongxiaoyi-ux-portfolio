@@ -160,8 +160,10 @@ function LoadingScreen({ onComplete }: { onComplete: () => void }) {
   return <motion.div className="loading-screen" exit={{ opacity: 0 }} transition={{ duration: 0.45 }}>
     <motion.p initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .7 }} className="loading-screen__label">董晓艺 · UX Portfolio</motion.p>
     <div className="loading-screen__word" aria-live="polite"><AnimatePresence mode="wait"><motion.span key={words[word]} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: .38 }}>{words[word]}</motion.span></AnimatePresence></div>
-    <p className="loading-screen__count">{String(count).padStart(3, '0')}</p>
-    <div className="loading-screen__track" aria-hidden="true"><div className="loading-screen__progress" style={{ transform: `scaleX(${count / 100})` }} /></div>
+    <div className="loading-screen__meter" role="progressbar" aria-label="页面加载进度" aria-valuemin={0} aria-valuemax={100} aria-valuenow={count}>
+      <div className="loading-screen__meter-head"><span>Loading</span><output className="loading-screen__count">{String(count).padStart(3, '0')}%</output></div>
+      <div className="loading-screen__track" aria-hidden="true"><div className="loading-screen__progress" style={{ transform: `scaleX(${count / 100})` }} /></div>
+    </div>
   </motion.div>
 }
 
