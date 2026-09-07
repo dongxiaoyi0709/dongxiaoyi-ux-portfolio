@@ -2,9 +2,12 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { X } from 'lucide-react'
 import { Document, Page, pdfjs } from 'react-pdf'
+import pdfWorkerUrl from 'pdfjs-dist/build/pdf.worker.min.mjs?url'
 import './PdfReader.css'
 
-pdfjs.GlobalWorkerOptions.workerSrc = new URL('pdfjs-dist/build/pdf.worker.min.mjs', import.meta.url).toString()
+// Keep the worker URL tied to the runtime version so a browser cannot reuse a
+// worker cached by an older deployment after pdfjs-dist is upgraded.
+pdfjs.GlobalWorkerOptions.workerSrc = `${pdfWorkerUrl}?pdfjs=${pdfjs.version}`
 
 type PdfArticle = {
   title: string
