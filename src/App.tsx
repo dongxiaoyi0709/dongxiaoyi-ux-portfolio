@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import Hls from 'hls.js'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { ArrowUpRight, Mail, Phone, X } from 'lucide-react'
@@ -9,7 +9,17 @@ import sharingPhoto1 from './assets/design-sharing/1.png'
 import sharingPhoto2 from './assets/design-sharing/2.png'
 import sharingPhoto3 from './assets/design-sharing/3.png'
 import sharingPhoto4 from './assets/design-sharing/4.png'
+import aiWorkflowCover from './assets/design-sharing/articles/ai-workflow.png'
+import aiWorkflowComparison from './assets/design-sharing/articles/ai-workflow-comparison.png'
+import aiWorkflowIntro from './assets/design-sharing/articles/ai-workflow-intro.png'
+import aiWorkflowProcess from './assets/design-sharing/articles/ai-workflow-process.png'
+import uxWritingCover from './assets/design-sharing/articles/ux-writing.png'
+import cognitivePsychologyCover from './assets/design-sharing/articles/cognitive-psychology.png'
+import designSystemCover from './assets/design-sharing/articles/design-system.png'
+import experienceMetricsCover from './assets/design-sharing/articles/experience-metrics.png'
 import './App.css'
+
+const PdfReader = lazy(() => import('./PdfReader'))
 
 const VIDEO_SOURCE = 'https://stream.mux.com/Aa02T7oM1wH5Mk5EEVDYhbZ1ChcdhRsS2m1NYyx4Ua1g.m3u8'
 
@@ -18,6 +28,23 @@ const sharingPhotos = [
   { src: sharingPhoto2, alt: 'AIGC 主题设计分享现场' },
   { src: sharingPhoto3, alt: '集体详情项目复盘分享现场' },
   { src: sharingPhoto4, alt: '设计经验总结分享现场' },
+]
+
+const sharingArticles = [
+  {
+    title: 'AI 设计师工作流',
+    cover: aiWorkflowCover,
+    pdf: '/sharing/ai-designer-workflow.pdf',
+    prependImages: [
+      { src: aiWorkflowIntro, alt: 'AI 设计师工作流封面' },
+      { src: aiWorkflowProcess, alt: 'UX Workflow 与 AI Capability System 工作思路' },
+      { src: aiWorkflowComparison, alt: '传统设计师与 Vibe Coding 工作流程对比' },
+    ],
+  },
+  { title: '体验度量与数据分析', cover: experienceMetricsCover, pdf: '/sharing/experience-measurement-data-analysis.pdf' },
+  { title: '提升设计系统的规范化思维', cover: designSystemCover, pdf: '/sharing/design-system-standardization.pdf' },
+  { title: 'UX 文案设计', cover: uxWritingCover, pdf: '/sharing/ux-writing-design.pdf' },
+  { title: '设计与认知心理学', cover: cognitivePsychologyCover, pdf: '/sharing/design-cognitive-psychology.pdf' },
 ]
 
 const projects = [
@@ -213,7 +240,27 @@ function Journal() {
 }
 
 function DesignSharing() {
-  return <section id="sharing" className="content-section sharing-section"><SectionTitle eyebrow="Design Sharing" title={<>设计<em>分享</em></>} subtext="有价值的经验总结，为团队赋能" /><div className="sharing-gallery">{sharingPhotos.map((photo, index) => <motion.figure key={photo.src} className="sharing-photo" initial={{ opacity: 0, y: 22 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: .55, delay: index * .07 }} viewport={{ once: true, margin: '-60px' }}><img src={photo.src} alt={photo.alt} /></motion.figure>)}</div></section>
+  const [activeArticle, setActiveArticle] = useState<(typeof sharingArticles)[number] | null>(null)
+  return <><section id="sharing" className="content-section sharing-section">
+    <SectionTitle eyebrow="Design Sharing" title={<>设计<em>分享</em></>} subtext="有价值的经验总结，为团队赋能" />
+    <div className="sharing-articles">
+      {sharingArticles.map((article, index) => <motion.button
+        type="button"
+        key={article.pdf}
+        className="sharing-article"
+        onClick={() => setActiveArticle(article)}
+        aria-label={`在作品集中阅读《${article.title}》`}
+        initial={{ opacity: 0, y: 22 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: .55, delay: index * .06 }}
+        viewport={{ once: true, margin: '-60px' }}
+      >
+        <img src={article.cover} alt={`${article.title}文章封面`} loading="lazy" decoding="async" />
+      </motion.button>)}
+    </div>
+    <p className="sharing-moments-label">Sharing moments</p>
+    <div className="sharing-gallery">{sharingPhotos.map((photo, index) => <motion.figure key={photo.src} className="sharing-photo" initial={{ opacity: 0, y: 22 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: .55, delay: index * .07 }} viewport={{ once: true, margin: '-60px' }}><img src={photo.src} alt={photo.alt} /></motion.figure>)}</div>
+  </section><AnimatePresence>{activeArticle && <Suspense fallback={<div className="pdf-reader pdf-reader--loading" role="status"><p className="pdf-reader__status">正在准备站内阅读器…</p></div>}><PdfReader article={activeArticle} onClose={() => setActiveArticle(null)} /></Suspense>}</AnimatePresence></>
 }
 
 function Stats() {
