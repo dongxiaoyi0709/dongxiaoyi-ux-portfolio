@@ -4,6 +4,7 @@ import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { ArrowUpRight, Mail, Phone, X } from 'lucide-react'
 import { gsap } from 'gsap'
 import contactWechatQr from './assets/contact-wechat-qr.png'
+import avatar from './assets/avatar.jpg'
 import sharingPhoto1 from './assets/design-sharing/1.png'
 import sharingPhoto2 from './assets/design-sharing/2.png'
 import sharingPhoto3 from './assets/design-sharing/3.png'
@@ -22,7 +23,7 @@ const sharingPhotos = [
 const projects = [
   {
     company: '深圳传音控股股份有限公司',
-    title: '高级 UI 设计师',
+    title: 'UI设计工程师',
     date: '2026.03 — 至今',
     focus: 'AI Agent · 电商 ERP · AI 体验设计',
     details: [
@@ -64,16 +65,20 @@ const projects = [
 
 const projectShowcases = [
   { brand: '多客', title: '电商智能客服系统', detail: '自动回复 · AI 坐席 · 多平台聚合', src: '/projects/duoke.png', gallery: 'duoke', galleryLimit: 54 },
+  { brand: 'KiliStore', title: 'AI 电商零售平台', detail: 'AI 建店 · 进销存 · POS', src: '/projects/kilistore-ai-retail.png', gallery: 'kilis' },
   { brand: '希沃白板', title: '集体备课', detail: '在线协同 · 视频研讨 · AI 报告', src: '/projects/seewo-whiteboard.png', gallery: 'jb', galleryLimit: 25 },
   { brand: 'Fika', title: 'AI Agent', detail: 'AI chat · Skills store · Cron tasks', src: '/projects/fika-ai-agent.png', gallery: 'fika' },
-  { brand: 'KiliStore', title: 'AI 电商零售平台', detail: 'AI 建店 · 进销存 · POS', src: '/projects/kilistore-ai-retail.png', gallery: 'kilis' },
   { brand: '希沃信鸽', title: '数智化教研评审平台', detail: 'B 端后台 · 评课管理 · 研修管理', src: '/projects/seewo-xinge-platform.png', gallery: 'szh' },
   { brand: 'seewo', title: '教师数字素养平台', detail: '可视化大屏 · 人机对话系统 · AIGC', src: '/projects/seewo-digital-literacy.png', gallery: 'literacy' },
   { brand: 'MBA 智库', title: 'MBA 智库 App', detail: '课堂 · 百科 · 文档 · 商学院', src: '/projects/mba-app.png', gallery: 'mba' },
   { brand: '4Seller', title: '电商 ERP 系统', detail: '多平台聚合 · 订单管理 · 库存同步', src: '/projects/4seller-erp.png', gallery: 'jb', galleryStart: 25 },
 ]
 
-const detailImageModules = import.meta.glob('/src/assets/project-details/**/*.{png,jpg}', { eager: true, import: 'default', query: '?url' }) as Record<string, string>
+const detailImageModules = import.meta.glob([
+  '/src/assets/project-details/**/*.{png,jpg}',
+  '!/src/assets/project-details/kilis/7.7.jpg',
+  '!/src/assets/project-details/kilis/7.12.jpg',
+], { eager: true, import: 'default', query: '?url' }) as Record<string, string>
 
 function detailImagesFor(folder: string) {
   return Object.entries(detailImageModules)
@@ -133,7 +138,7 @@ function LoadingScreen({ onComplete }: { onComplete: () => void }) {
   </motion.div>
 }
 
-function Logo() { return <a className="logo" href="#home" aria-label="Doris 主页"><span>DX</span></a> }
+function Logo() { return <a className="logo" href="#home" aria-label="Doris 主页"><img src={avatar} alt="Doris 的头像" /></a> }
 
 function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -193,7 +198,7 @@ function ProjectDetail({ project, onClose }: { project: (typeof projectShowcases
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
   }, [onClose])
-  return <motion.article className="project-detail" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} role="dialog" aria-modal="true" aria-label={`${project.title}项目详情`}><header className="project-detail__bar"><button type="button" onClick={onClose} aria-label="关闭项目详情"><X size={18} /><span>关闭详情</span></button><p>{project.brand}</p></header><div className="project-detail__intro"><p className="section-label">Project Case Study</p><h2>{project.title}</h2><p>{project.detail}</p></div><div className="project-detail__gallery">{images.map((source, index) => <img key={source} src={source} alt={`${project.title}设计画面 ${index + 1}`} loading={index < 2 ? 'eager' : 'lazy'} decoding="async" />)}</div></motion.article>
+  return <motion.article className="project-detail" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} role="dialog" aria-modal="true" aria-label={`${project.title}项目详情`}><header className="project-detail__bar"><p>{project.brand}</p><button type="button" onClick={onClose} aria-label="关闭项目详情"><X size={20} aria-hidden="true" /></button></header><div className="project-detail__intro"><p className="section-label">Project Case Study</p><h2>{project.title}</h2><p>{project.detail}</p></div><div className="project-detail__gallery">{images.map((source, index) => <img key={source} src={source} alt={`${project.title}设计画面 ${index + 1}`} loading={index < 2 ? 'eager' : 'lazy'} decoding="async" />)}</div></motion.article>
 }
 
 function ProjectShowcase() {
