@@ -1,5 +1,4 @@
 import { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState } from 'react'
-import Hls from 'hls.js'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { ArrowUpRight, Mail, Phone, X } from 'lucide-react'
 import { gsap } from 'gsap'
@@ -17,11 +16,11 @@ import uxWritingCover from './assets/design-sharing/articles/ux-writing.png'
 import cognitivePsychologyCover from './assets/design-sharing/articles/cognitive-psychology.png'
 import designSystemCover from './assets/design-sharing/articles/design-system.png'
 import experienceMetricsCover from './assets/design-sharing/articles/experience-metrics.png'
+import PrismBackground from './FooterPrismBackground'
+import SparklesText from './SparklesText'
 import './App.css'
 
 const PdfReader = lazy(() => import('./PdfReader'))
-
-const VIDEO_SOURCE = 'https://stream.mux.com/Aa02T7oM1wH5Mk5EEVDYhbZ1ChcdhRsS2m1NYyx4Ua1g.m3u8'
 
 const sharingPhotos = [
   { src: sharingPhoto1, alt: '希沃信鸽设计分享现场' },
@@ -123,23 +122,6 @@ const strengths = [
 
 function ArrowIcon() { return <ArrowUpRight size={15} strokeWidth={1.6} aria-hidden="true" /> }
 
-function CinematicVideo({ className = '' }: { className?: string }) {
-  const videoRef = useRef<HTMLVideoElement>(null)
-  useEffect(() => {
-    const video = videoRef.current
-    if (!video) return
-    let hls: Hls | undefined
-    if (Hls.isSupported()) {
-      hls = new Hls({ enableWorker: true, lowLatencyMode: true })
-      hls.loadSource(VIDEO_SOURCE)
-      hls.attachMedia(video)
-    } else if (video.canPlayType('application/vnd.apple.mpegurl')) video.src = VIDEO_SOURCE
-    void video.play().catch(() => undefined)
-    return () => hls?.destroy()
-  }, [])
-  return <video ref={videoRef} className={className} autoPlay muted loop playsInline aria-hidden="true" />
-}
-
 function LoadingScreen({ onComplete }: { onComplete: () => void }) {
   const [count, setCount] = useState(0)
   const [word, setWord] = useState(0)
@@ -180,8 +162,8 @@ function Navbar() {
   const items = [{ label: 'Home', target: 'home' }, { label: 'Work', target: 'projects' }, { label: 'Resume', target: 'work' }]
   const navigate = (label: string, target: string) => { setActive(label); document.getElementById(target)?.scrollIntoView({ behavior: 'smooth', block: 'start' }) }
   return <header className="nav-wrap"><nav className={`nav ${isScrolled ? 'nav--scrolled' : ''}`} aria-label="Primary navigation">
-    <Logo /><span className="nav__divider nav__divider--first" /><div className="nav__links">{items.map((item) => <button key={item.label} className={`nav__link ${active === item.label ? 'nav__link--active' : ''}`} onClick={() => navigate(item.label, item.target)}>{item.label}</button>)}</div><span className="nav__divider" />
-    <a className="say-hi" href="#contact"><span>Say hi</span><ArrowIcon /></a>
+    <div className="nav__brand"><Logo /><span><strong>董晓艺</strong><small>UX Designer</small></span></div>
+    <div className="nav__links">{items.map((item) => <button key={item.label} className={`nav__link ${active === item.label ? 'nav__link--active' : ''}`} onClick={() => navigate(item.label, item.target)}>{item.label}</button>)}<a className="say-hi" href="#contact"><span>Say hi</span><ArrowIcon /></a></div>
   </nav></header>
 }
 
@@ -198,25 +180,24 @@ function Hero() {
     return () => context.revert()
   }, [reducedMotion])
   return <section id="home" className="hero-section" ref={heroRef}>
-    <CinematicVideo className="hero-section__video" /><div className="hero-section__veil" /><div className="hero-section__fade" />
+    <PrismBackground />
+    <div className="hero-section__prism-frame" data-triangle-container aria-hidden="true" />
     <div className="hero-section__content">
-      <p className="hero-section__edition blur-in"><span aria-hidden="true" /><b>UX PORTFOLIO · 2026</b><span aria-hidden="true" /></p>
-      <h1 className="hero-section__name name-reveal">Doris Dong</h1>
-      <p className="hero-section__role blur-in">A UX designer building AI-native product experiences.</p>
-      <div className="hero-section__divider blur-in" aria-hidden="true"><span /><i /><span /></div>
-      <p className="hero-section__description blur-in">8 years across AI Agent, cross-border e-commerce, education and knowledge products.</p>
-      <div className="hero-section__actions blur-in"><a className="button button--solid" href="#projects">See work <ArrowIcon /></a><a className="button button--outline" href="#contact">Reach out... <ArrowIcon /></a></div>
+      <p className="hero-section__edition blur-in">UX Designer · AI Product Experience</p>
+      <h1 className="hero-section__name name-reveal"><span>Doris Dong</span></h1>
+      <p className="hero-section__description blur-in">8 years of UX design experience across AI agents, cross-border e-commerce, education products, and knowledge services—connecting business goals with user needs through systems thinking.</p>
+      <div className="hero-section__actions blur-in"><a className="button button--solid" href="#projects">View Projects <ArrowIcon /></a><a className="button button--outline" href="#work">Work Experience <ArrowIcon /></a></div>
     </div>
-    <a className="scroll-indicator" href="#projects" aria-label="查看项目"><span className="scroll-indicator__orb"><i /></span><span>Scroll</span></a>
+    <a className="scroll-indicator" href="#projects" aria-label="继续浏览"><span>Scroll to explore</span><i aria-hidden="true" /></a>
   </section>
 }
 
-function SectionTitle({ eyebrow, title, subtext, action }: { eyebrow: string; title: React.ReactNode; subtext: string; action?: string }) {
+function SectionTitle({ eyebrow, title, subtext, action }: { eyebrow: string; title: string; subtext: string; action?: string }) {
   return <motion.div className="section-title" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: .85, ease: [.25, .1, .25, 1] }} viewport={{ once: true, margin: '-100px' }}><div><p className="section-label section-label--with-line">{eyebrow}</p><h2>{title}</h2><p className="section-title__subtext">{subtext}</p></div>{action && <span className="section-title__action section-title__note">{action}</span>}</motion.div>
 }
 
 function Works() {
-  return <section id="work" className="content-section works-section"><SectionTitle eyebrow="Professional Experience" title={<>工作<em>经历</em></>} subtext="8 年 UX 设计经验，聚焦 AI Agent、跨境电商、教育产品与知识服务。" /><div className="experience-timeline">{projects.map((project, index) => <motion.article key={project.company} className="timeline-entry" initial={{ opacity: 0, y: 26 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: .6, delay: index * .08 }} viewport={{ once: true, margin: '-60px' }}><time className="timeline-entry__date">{project.date}</time><span className="timeline-entry__marker" aria-hidden="true"><i /></span><div className="timeline-entry__content"><p>{project.company}</p><h3>{project.title}</h3><ul className="timeline-entry__details">{project.details.map((detail) => <li key={detail}>{detail}</li>)}</ul></div></motion.article>)}</div></section>
+  return <section id="work" className="content-section works-section"><SectionTitle eyebrow="Professional Experience" title="工作经历" subtext="8 年 UX 设计经验，聚焦 AI Agent、跨境电商、教育产品与知识服务。" /><div className="experience-timeline">{projects.map((project, index) => <motion.article key={project.company} className="timeline-entry" initial={{ opacity: 0, y: 26 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: .6, delay: index * .08 }} viewport={{ once: true, margin: '-60px' }}><time className="timeline-entry__date">{project.date}</time><span className="timeline-entry__marker" aria-hidden="true"><i /></span><div className="timeline-entry__content"><p>{project.company}</p><h3>{project.title}</h3><ul className="timeline-entry__details">{project.details.map((detail) => <li key={detail}>{detail}</li>)}</ul></div></motion.article>)}</div></section>
 }
 
 function ProjectDetail({ project, onClose }: { project: (typeof projectShowcases)[number]; onClose: () => void }) {
@@ -234,17 +215,17 @@ function ProjectShowcase() {
   const [activeProject, setActiveProject] = useState<(typeof projectShowcases)[number] | null>(null)
   const [detailProject, setDetailProject] = useState<(typeof projectShowcases)[number] | null>(null)
   const openProject = (project: (typeof projectShowcases)[number]) => project.gallery ? setDetailProject(project) : setActiveProject(project)
-  return <section id="projects" className="projects-section"><div className="content-section projects-section__inner"><SectionTitle eyebrow="Selected Projects" title={<>项目<em>展示</em></>} subtext="覆盖跨境电商、教育产品、知识服务与品牌体验的设计实践。" action="8 个项目" /><div className="showcase-grid">{projectShowcases.map((project, index) => <motion.button type="button" key={project.src} className="showcase-card" initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: .6, delay: (index % 3) * .07 }} viewport={{ once: true, margin: '-70px' }} onClick={() => openProject(project)} aria-label={`查看 ${project.brand}${project.title}${project.gallery ? '项目详情' : '项目封面'}`}><img src={project.src} alt={`${project.brand}${project.title}项目封面`} /><span className="showcase-card__shade" /><span className="showcase-card__caption"><span>{String(index + 1).padStart(2, '0')}</span><strong>{project.title}</strong><small>{project.detail}</small><i>{project.gallery ? '查看详情' : '点击查看'} <ArrowIcon /></i></span></motion.button>)}</div></div><AnimatePresence>{activeProject && <motion.div className="lightbox showcase-lightbox" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setActiveProject(null)} role="dialog" aria-modal="true" aria-label={`${activeProject.title}项目封面预览`}><motion.div className="lightbox__content showcase-lightbox__content" initial={{ scale: .96 }} animate={{ scale: 1 }} exit={{ scale: .96 }} onClick={(event) => event.stopPropagation()}><img src={activeProject.src} alt={`${activeProject.brand}${activeProject.title}项目封面`} /><div><span>{activeProject.brand}</span><strong>{activeProject.title}</strong><small>{activeProject.detail}</small></div><button type="button" onClick={() => setActiveProject(null)} aria-label="关闭项目封面预览"><X size={20} /></button></motion.div></motion.div>}</AnimatePresence><AnimatePresence>{detailProject && <ProjectDetail project={detailProject} onClose={() => setDetailProject(null)} />}</AnimatePresence></section>
+  return <section id="projects" className="projects-section"><div className="content-section projects-section__inner"><SectionTitle eyebrow="Selected Projects" title="项目展示" subtext="覆盖跨境电商、教育产品、知识服务与品牌体验的设计实践。" /><div className="showcase-grid">{projectShowcases.map((project, index) => <motion.button type="button" key={project.src} className="showcase-card" initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: .6, delay: (index % 3) * .07 }} viewport={{ once: true, margin: '-70px' }} onClick={() => openProject(project)} aria-label={`查看 ${project.brand}${project.title}${project.gallery ? '项目详情' : '项目封面'}`}><img src={project.src} alt={`${project.brand}${project.title}项目封面`} /><span className="showcase-card__caption"><strong>{project.title}</strong><small>{project.detail}</small></span></motion.button>)}</div></div><AnimatePresence>{activeProject && <motion.div className="lightbox showcase-lightbox" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setActiveProject(null)} role="dialog" aria-modal="true" aria-label={`${activeProject.title}项目封面预览`}><motion.div className="lightbox__content showcase-lightbox__content" initial={{ scale: .96 }} animate={{ scale: 1 }} exit={{ scale: .96 }} onClick={(event) => event.stopPropagation()}><img src={activeProject.src} alt={`${activeProject.brand}${activeProject.title}项目封面`} /><div><span>{activeProject.brand}</span><strong>{activeProject.title}</strong><small>{activeProject.detail}</small></div><button type="button" onClick={() => setActiveProject(null)} aria-label="关闭项目封面预览"><X size={20} /></button></motion.div></motion.div>}</AnimatePresence><AnimatePresence>{detailProject && <ProjectDetail project={detailProject} onClose={() => setDetailProject(null)} />}</AnimatePresence></section>
 }
 
 function Journal() {
-  return <section id="advantages" className="content-section journal-section"><SectionTitle eyebrow="Core Strengths" title={<>个人<em>优势</em></>} subtext="从全流程设计到 AI 协同，让策略、体验与交付保持同一节奏。" action="UX 能力" /><div className="journal-list">{strengths.map((strength, index) => <motion.article key={strength.number} className="journal-entry" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: .5, delay: index * .06 }} viewport={{ once: true }}><span className="journal-entry__number">{strength.number}</span><span className="journal-entry__title">{strength.title}</span><span className="journal-entry__meta">{strength.description}</span></motion.article>)}</div></section>
+  return <section id="advantages" className="content-section journal-section"><SectionTitle eyebrow="Core Strengths" title="个人优势" subtext="从全流程设计到 AI 协同，让策略、体验与交付保持同一节奏。" /><div className="journal-list">{strengths.map((strength, index) => <motion.article key={strength.number} className="journal-entry" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: .5, delay: index * .06 }} viewport={{ once: true }}><span className="journal-entry__number">{strength.number}</span><span className="journal-entry__title">{strength.title}</span><span className="journal-entry__meta">{strength.description}</span></motion.article>)}</div></section>
 }
 
 function DesignSharing() {
   const [activeArticle, setActiveArticle] = useState<(typeof sharingArticles)[number] | null>(null)
   return <><section id="sharing" className="content-section sharing-section">
-    <SectionTitle eyebrow="Design Sharing" title={<>设计<em>分享</em></>} subtext="有价值的经验总结，为团队赋能" />
+    <SectionTitle eyebrow="Design Sharing" title="设计分享" subtext="有价值的经验总结，为团队赋能" />
     <div className="sharing-articles">
       {sharingArticles.map((article, index) => <motion.button
         type="button"
@@ -265,19 +246,13 @@ function DesignSharing() {
   </section><AnimatePresence>{activeArticle && <Suspense fallback={<div className="pdf-reader pdf-reader--loading" role="status"><p className="pdf-reader__status">正在准备站内阅读器…</p></div>}><PdfReader article={activeArticle} onClose={() => setActiveArticle(null)} /></Suspense>}</AnimatePresence></>
 }
 
-function Stats() {
-  const stats = [{ value: '8+', label: '年 UX 设计经验' }, { value: '4', label: '段完整工作经历' }, { value: 'B / C', label: '端项目设计经验' }]
-  return <section id="stats" className="stats-section"><div className="stats-section__inner">{stats.map((stat, index) => <motion.div key={stat.label} initial={{ opacity: 0, y: 22 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: .6, delay: index * .1 }} viewport={{ once: true }}><p>{stat.value}</p><span>{stat.label}</span></motion.div>)}</div></section>
-}
-
 function Contact() {
-  const marquee = Array.from({ length: 10 }, () => 'DESIGN FOR RESULTS •').join(' ')
-  return <footer id="contact" className="contact-section"><CinematicVideo className="contact-section__video" /><div className="contact-section__veil" /><div className="contact-section__marquee" aria-hidden="true"><span>{marquee}</span><span>{marquee}</span></div><div className="contact-section__content"><h2>用设计，帮助业务 <em>拿结果。</em></h2><div className="contact-details" aria-label="联系方式"><a className="contact-detail" href="tel:15606929798" aria-label="致电 156 0692 9798"><Phone aria-hidden="true" /><strong>156 0692 9798</strong></a><a className="contact-detail" href="mailto:1021517054@qq.com" aria-label="发送邮件至 1021517054@qq.com"><Mail aria-hidden="true" /><strong>1021517054@qq.com</strong></a></div><img className="contact-qr" src={contactWechatQr} alt="董晓艺的微信二维码" /></div></footer>
+  return <footer id="contact" className="contact-section"><div className="contact-section__content"><p className="section-label">Let's work together</p><h2><SparklesText><span>用设计，</span><span>帮助业务拿结果。</span></SparklesText></h2><div className="contact-section__grid"><div className="contact-section__copy"><p>欢迎交流产品体验、AI 设计工作流与设计团队协作。</p><div className="contact-details" aria-label="联系方式"><a className="contact-detail" href="tel:15606929798" aria-label="致电 156 0692 9798"><Phone aria-hidden="true" /><strong>156 0692 9798</strong></a><a className="contact-detail" href="mailto:1021517054@qq.com" aria-label="发送邮件至 1021517054@qq.com"><Mail aria-hidden="true" /><strong>1021517054@qq.com</strong></a></div></div><img className="contact-qr" src={contactWechatQr} alt="董晓艺的微信二维码" /></div><div className="footer-meta"><span>© 2026 董晓艺</span><span>UX Designer · Shenzhen</span></div></div></footer>
 }
 
 function App() {
   const [isLoading, setIsLoading] = useState(true)
-  return <><AnimatePresence>{isLoading && <LoadingScreen onComplete={() => setIsLoading(false)} />}</AnimatePresence><Navbar /><main><Hero /><Works /><ProjectShowcase /><DesignSharing /><Journal /><Stats /></main><Contact /></>
+  return <><AnimatePresence>{isLoading && <LoadingScreen onComplete={() => setIsLoading(false)} />}</AnimatePresence><Navbar /><main><Hero /><ProjectShowcase /><Works /><DesignSharing /><Journal /></main><Contact /></>
 }
 
 export default App
