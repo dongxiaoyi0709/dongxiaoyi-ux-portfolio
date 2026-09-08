@@ -6,7 +6,8 @@ import { sites } from '@openai/sites-vite-plugin'
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => ({
-  plugins: [wgslVitePlugin({ minify: mode === 'production' }), react(), tailwindcss(), sites()],
+  // VGPU matches vertex attributes by name, so WGSL identifiers must stay intact.
+  plugins: [wgslVitePlugin({ minify: mode === 'production' ? { whitespace: true, identifiers: 'none' } : false }), react(), tailwindcss(), sites()],
   build: {
     outDir: 'dist/client',
   },
