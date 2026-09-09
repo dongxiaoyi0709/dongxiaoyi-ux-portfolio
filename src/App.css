@@ -440,16 +440,16 @@
   min-width: 0;
   overflow: hidden;
   padding: 0;
-  border: 1px solid hsl(var(--stroke));
+  border: 0;
   border-radius: .7rem;
   color: hsl(var(--text));
-  background: #fff;
+  background: transparent;
   flex-direction: column;
   text-align: left;
-  transition: border-color .25s ease, background-color .25s ease, color .25s ease, transform .25s ease;
+  transition: transform .25s ease;
 }
 
-.showcase-card:is(:hover, :focus-visible) { border-color: #303030; background-color: #303030; color: #fff; transform: translateY(-3px); }
+.showcase-card:is(:hover, :focus-visible) { transform: translateY(-3px); }
 
 .showcase-card > img {
   width: 100%;
@@ -459,34 +459,6 @@
 }
 
 .showcase-card:hover > img { transform: scale(1.018); filter: saturate(1.05); }
-.showcase-card__caption {
-  position: relative;
-  display: grid;
-  flex: 1;
-  width: 100%;
-  min-height: 5.75rem;
-  padding: 1rem;
-  grid-template-columns: minmax(0, 1fr);
-  align-content: start;
-  gap: .65rem;
-  background-color: inherit;
-}
-
-.showcase-card__caption strong {
-  font-size: .9rem;
-  font-weight: 600;
-  line-height: 1.35;
-}
-
-.showcase-card__caption small {
-  color: hsl(var(--muted));
-  font-size: .66rem;
-  line-height: 1.55;
-  transition: color .25s ease;
-}
-
-.showcase-card:is(:hover, :focus-visible) .showcase-card__caption small { color: #ccc; }
-
 .showcase-card:focus-visible,
 .sharing-article:focus-visible,
 .nav__link:focus-visible,
@@ -934,9 +906,6 @@
   .projects-section__inner { padding-top: 5.5rem; padding-bottom: 5.5rem; }
   .showcase-grid,
   .sharing-articles { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .7rem; }
-  .showcase-card__caption { min-height: 5.5rem; padding: .75rem; gap: .45rem; }
-  .showcase-card__caption strong { font-size: .72rem; }
-  .showcase-card__caption small { font-size: .54rem; }
 
   .timeline-entry { min-height: 0; grid-template-columns: .8rem minmax(0, 1fr); gap: 0 .8rem; padding: 1.5rem 0; }
   .timeline-entry__date { grid-column: 2; grid-row: 1; padding: 0 0 .55rem; font-size: .95rem; text-align: left; }
