@@ -1,10 +1,25 @@
 import { useEffect, useRef, useState } from 'react'
 import type { PrismRenderer } from '../vendor/vgpu-prism/renderer'
 import PrismVideoFallback from './PrismVideoFallback'
+import useMediaQuery from './useMediaQuery'
 
 type PrismState = 'idle' | 'loading' | 'ready' | 'fallback'
 
 export default function PrismBackground() {
+  // Use the existing mobile layout breakpoint, plus touch-only devices in landscape.
+  // Static mode never mounts a canvas, imports WebGPU, or requests a video.
+  const staticOnly = useMediaQuery('(max-width: 720px), (hover: none) and (pointer: coarse), (prefers-reduced-motion: reduce)')
+
+  if (staticOnly) {
+    return <div className="prism-background prism-background--static">
+      <PrismVideoFallback enabled={false} />
+    </div>
+  }
+
+  return <InteractivePrismBackground />
+}
+
+function InteractivePrismBackground() {
   const rootRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const framingRef = useRef<HTMLDivElement>(null)
@@ -48,13 +63,8 @@ export default function PrismBackground() {
       failed = true
       if (!cancelled) setState('fallback')
     }
-    // A stalled adapter must not leave the hero waiting indefinitely.
-    const timeout = window.setTimeout(() => {
-      fallBack()
-      rendererRef.current?.dispose()
-      rendererRef.current = null
-    }, 12000)
-
+    // Keep the poster visible while loading. Slow imports/adapter startup must not
+    // permanently replace the desktop's mouse interaction with a looping video.
     void Promise.all([
       import('../vendor/vgpu-prism/renderer'),
       import('../vendor/vgpu-prism/types'),
@@ -65,7 +75,7 @@ export default function PrismBackground() {
         canvas,
         framingElement: framingRef.current ?? undefined,
         initialMode: 'light',
-        initialQuality: window.matchMedia('(max-width: 767px)').matches ? 'low' : 'auto',
+        initialQuality: 'auto',
         initialControls: {
           ...DEFAULT_PRISM_CONTROLS,
           wallColor: '#d2ccc2',
@@ -80,11 +90,10 @@ export default function PrismBackground() {
     }).catch((error: unknown) => {
       console.error('Prism background failed to initialize.', error)
       fallBack()
-    }).finally(() => window.clearTimeout(timeout))
+    })
 
     return () => {
       cancelled = true
-      window.clearTimeout(timeout)
       rendererRef.current?.dispose()
       rendererRef.current = null
     }

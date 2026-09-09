@@ -88,7 +88,7 @@ const MOBILE_MAX_RENDER_FPS = 30;
 const LOW_QUALITY_DPR = 1;
 const OFFSCREEN_ROOT_MARGIN_PX = 256;
 const PERFORMANCE_DPR_QUERY = "prism-perf-dpr";
-const MOBILE_AUTO_POINTER_QUERY = "(max-width: 767px)";
+const MOBILE_AUTO_POINTER_QUERY = "(max-width: 720px), (hover: none) and (pointer: coarse)";
 const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
 
 /** Lets vgpu request its device from the adapter already probed for features. */
