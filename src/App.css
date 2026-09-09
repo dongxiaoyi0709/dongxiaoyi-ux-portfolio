@@ -263,10 +263,12 @@
 
 .prism-background__frame {
   position: absolute;
-  top: 10%;
-  right: -3%;
-  bottom: 5%;
-  left: 39%;
+  /* Match vgpu.sh's viewport-height slot and 80px inner framing padding. */
+  top: 50%;
+  right: calc(max(0px, (100% - 1448px) / 2) + 6.5rem);
+  left: calc(max(0px, (100% - 1448px) / 2) + 32.5rem + clamp(2rem, 5vw, 5rem));
+  height: calc(100svh - 2 * clamp(3rem, 8svh, 6rem) - 10rem);
+  transform: translateY(-50%);
   pointer-events: none;
 }
 
@@ -874,7 +876,7 @@
 }
 
 @media (max-width: 1024px) {
-  .prism-background__frame { top: 12%; right: -9%; bottom: 8%; left: 35%; }
+  .prism-background__frame { right: 8%; left: 46%; }
   .showcase-grid,
   .sharing-articles { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
@@ -888,7 +890,7 @@
   .nav__link::after, .say-hi::after { right: .48rem; left: .48rem; }
 
   .hero-section { min-height: 52rem; }
-  .prism-background__frame { top: 43%; right: -24%; bottom: 4%; left: -24%; }
+  .prism-background__frame { top: 43%; right: -24%; bottom: 4%; left: -24%; height: auto; transform: none; }
   .hero-section__content { width: calc(100% - 2.5rem); min-height: 52rem; justify-content: flex-start; padding: 7.3rem 0 17rem; }
   .hero-section__edition { margin-bottom: 1.4rem; font-size: .57rem; letter-spacing: .15em; }
   .hero-section__name { max-width: 22rem; font-size: clamp(3.15rem, 14.8vw, 5.1rem); line-height: .94; }
