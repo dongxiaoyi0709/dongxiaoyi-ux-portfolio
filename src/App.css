@@ -192,6 +192,7 @@
 
 .hero-section {
   position: relative;
+  isolation: isolate;
   min-height: max(48rem, 100svh);
   overflow: hidden;
   color: #111217;
@@ -200,7 +201,6 @@
 
 .prism-background {
   position: absolute;
-  z-index: 0;
   inset: 0;
   overflow: hidden;
   background: #d2ccc2;
@@ -219,9 +219,45 @@
   transition: opacity .8s ease;
 }
 
+.prism-background__poster,
+.prism-background__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.prism-background__video {
+  opacity: 0;
+  transition: opacity .5s ease;
+}
+
+.prism-background__video--playing { opacity: 1; }
+
+.prism-background__play {
+  position: absolute;
+  z-index: 4;
+  left: clamp(1.25rem, 4vw, 3rem);
+  bottom: 1.25rem;
+  min-height: 2.75rem;
+  padding: .6rem 1rem;
+  border: 1px solid rgb(17 18 23 / .25);
+  border-radius: 2rem;
+  color: #111217;
+  background: rgb(255 255 255 / .88);
+  font: inherit;
+  font-size: .8rem;
+  cursor: pointer;
+}
+
+.prism-background__play:focus-visible { outline: 2px solid #245bff; outline-offset: 3px; }
+
 .prism-background__canvas {
   display: block;
   opacity: 0;
+  pointer-events: none;
   transition: opacity 1s ease;
 }
 

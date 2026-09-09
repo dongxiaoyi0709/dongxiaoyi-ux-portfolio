@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import type { PrismRenderer } from '../vendor/vgpu-prism/renderer'
+import PrismVideoFallback from './PrismVideoFallback'
 
 type PrismState = 'idle' | 'loading' | 'ready' | 'fallback'
 
@@ -40,44 +41,58 @@ export default function PrismBackground() {
     }
 
     let cancelled = false
+    let failed = false
     setState('loading')
+
+    const fallBack = () => {
+      failed = true
+      if (!cancelled) setState('fallback')
+    }
+    // A stalled adapter must not leave the hero waiting indefinitely.
+    const timeout = window.setTimeout(() => {
+      fallBack()
+      rendererRef.current?.dispose()
+      rendererRef.current = null
+    }, 12000)
 
     void Promise.all([
       import('../vendor/vgpu-prism/renderer'),
       import('../vendor/vgpu-prism/types'),
     ]).then(async ([{ createRenderer }, { DEFAULT_PRISM_CONTROLS }]) => {
-      if (cancelled) return
+      if (cancelled || failed) return
 
       const renderer = createRenderer({
         canvas,
         framingElement: framingRef.current ?? undefined,
         initialMode: 'light',
-        initialQuality: 'auto',
+        initialQuality: window.matchMedia('(max-width: 767px)').matches ? 'low' : 'auto',
         initialControls: {
           ...DEFAULT_PRISM_CONTROLS,
           wallColor: '#d2ccc2',
         },
         onError: (error) => console.error('Prism background rendering issue.', error),
+        onFatalError: fallBack,
       })
 
       rendererRef.current = renderer
       await renderer.ready
-      if (!cancelled) setState('ready')
+      if (!cancelled && !failed) setState('ready')
     }).catch((error: unknown) => {
       console.error('Prism background failed to initialize.', error)
-      if (!cancelled) setState('fallback')
-    })
+      fallBack()
+    }).finally(() => window.clearTimeout(timeout))
 
     return () => {
       cancelled = true
+      window.clearTimeout(timeout)
       rendererRef.current?.dispose()
       rendererRef.current = null
     }
   }, [shouldStart])
 
-  return <div ref={rootRef} className={`prism-background prism-background--${state}`} aria-hidden="true">
-    <div className="prism-background__fallback" />
-    <canvas ref={canvasRef} className="prism-background__canvas" />
-    <div ref={framingRef} className="prism-background__frame" />
+  return <div ref={rootRef} className={`prism-background prism-background--${state}`}>
+    <PrismVideoFallback enabled={state === 'fallback'} />
+    <canvas ref={canvasRef} className="prism-background__canvas" aria-hidden="true" />
+    <div ref={framingRef} className="prism-background__frame" aria-hidden="true" />
   </div>
 }
