@@ -116,6 +116,8 @@ export interface PrismBrowserRendererOptions
   readonly initialMode: PrismPipelineMode;
   /** User quality preference; Auto starts High and is the default. */
   readonly initialQuality?: PrismQualityPreference;
+  /** Terminal rendering failure only; onError also reports recoverable issues. */
+  readonly onFatalError?: (error: unknown) => void;
   /** Loads preview-only WebGPU code; must only be enabled for `?debug`. */
   readonly debugPreviews?: boolean;
   /** Dynamically loads the deterministic sampler for `?prism-perf`. */
@@ -235,6 +237,11 @@ export function createRenderer(
     if (disposed) return;
     if (!reportedError) {
       reportedError = true;
+      try {
+        options.onFatalError?.(error);
+      } catch {
+        /* reporting must not block teardown */
+      }
       try {
         options.onError?.(error);
       } catch {
