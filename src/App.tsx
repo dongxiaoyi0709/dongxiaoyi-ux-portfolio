@@ -92,10 +92,10 @@ const projectShowcases = [
   { brand: 'KiliStore', website: 'https://www.kilimax.com/kilistore/', title: 'AI 电商零售平台', detail: 'AI 建店 · 进销存 · POS', src: '/projects/kilistore-ai-retail.webp', gallery: 'kilis' },
   { brand: '希沃白板', website: 'https://easinote.seewo.com/', title: '集体备课', detail: '在线协同 · 视频研讨 · AI 报告', src: '/projects/seewo-whiteboard.webp', gallery: 'jb', galleryLimit: 25 },
   { brand: 'Fika', website: 'https://fika.kilimax.com/en/', title: 'AI Agent', detail: 'AI chat · Skills store · Cron tasks', src: '/projects/fika-ai-agent.webp', gallery: 'fika' },
-  { brand: '希沃信鸽', title: '数智化教研评审平台', detail: 'B 端后台 · 评课管理 · 研修管理', src: '/projects/seewo-xinge-platform.webp', gallery: 'szh' },
-  { brand: 'seewo', title: '教师数字素养平台', detail: '可视化大屏 · 人机对话系统 · AIGC', src: '/projects/seewo-digital-literacy.webp', gallery: 'literacy' },
-  { brand: 'MBA 智库', title: 'MBA 智库 App', detail: '课堂 · 百科 · 文档 · 商学院', src: '/projects/mba-app.webp', gallery: 'mba' },
-  { brand: '4Seller', title: '电商 ERP 系统', detail: '多平台聚合 · 订单管理 · 库存同步', src: '/projects/4seller-erp.webp', gallery: 'jb', galleryStart: 25 },
+  { brand: '希沃信鸽', website: 'https://yanxiu.seewo.com/pc/org/zhejiang', title: '数智化教研评审平台', detail: 'B 端后台 · 评课管理 · 研修管理', src: '/projects/seewo-xinge-platform.webp', gallery: 'szh' },
+  { brand: 'seewo', website: 'https://teacher-digital.seewo.com/main', title: '教师数字素养平台', detail: '可视化大屏 · 人机对话系统 · AIGC', src: '/projects/seewo-digital-literacy.webp', gallery: 'literacy' },
+  { brand: 'MBA 智库', website: 'https://www.mbalib.com/apps/mbalib/', title: 'MBA 智库 App', detail: '课堂 · 百科 · 文档 · 商学院', src: '/projects/mba-app.webp', gallery: 'mba' },
+  { brand: '4Seller', website: 'https://www.4seller.com/en-US/home.html', title: '电商 ERP 系统', detail: '多平台聚合 · 订单管理 · 库存同步', src: '/projects/4seller-erp.webp', gallery: 'jb', galleryStart: 25 },
 ]
 
 const detailImageModules = import.meta.glob([
