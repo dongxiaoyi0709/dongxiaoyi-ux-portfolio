@@ -88,10 +88,10 @@ const projects = [
 ]
 
 const projectShowcases = [
-  { brand: '多客', title: '电商智能客服系统', detail: '自动回复 · AI 坐席 · 多平台聚合', src: '/projects/duoke.webp', gallery: 'duoke', galleryLimit: 54 },
-  { brand: 'KiliStore', title: 'AI 电商零售平台', detail: 'AI 建店 · 进销存 · POS', src: '/projects/kilistore-ai-retail.webp', gallery: 'kilis' },
-  { brand: '希沃白板', title: '集体备课', detail: '在线协同 · 视频研讨 · AI 报告', src: '/projects/seewo-whiteboard.webp', gallery: 'jb', galleryLimit: 25 },
-  { brand: 'Fika', title: 'AI Agent', detail: 'AI chat · Skills store · Cron tasks', src: '/projects/fika-ai-agent.webp', gallery: 'fika' },
+  { brand: '多客', website: 'https://www.duoke.com/zh-CN/index.html', title: '电商智能客服系统', detail: '自动回复 · AI 坐席 · 多平台聚合', src: '/projects/duoke.webp', gallery: 'duoke', galleryLimit: 54 },
+  { brand: 'KiliStore', website: 'https://www.kilimax.com/kilistore/', title: 'AI 电商零售平台', detail: 'AI 建店 · 进销存 · POS', src: '/projects/kilistore-ai-retail.webp', gallery: 'kilis' },
+  { brand: '希沃白板', website: 'https://easinote.seewo.com/', title: '集体备课', detail: '在线协同 · 视频研讨 · AI 报告', src: '/projects/seewo-whiteboard.webp', gallery: 'jb', galleryLimit: 25 },
+  { brand: 'Fika', website: 'https://fika.kilimax.com/en/', title: 'AI Agent', detail: 'AI chat · Skills store · Cron tasks', src: '/projects/fika-ai-agent.webp', gallery: 'fika' },
   { brand: '希沃信鸽', title: '数智化教研评审平台', detail: 'B 端后台 · 评课管理 · 研修管理', src: '/projects/seewo-xinge-platform.webp', gallery: 'szh' },
   { brand: 'seewo', title: '教师数字素养平台', detail: '可视化大屏 · 人机对话系统 · AIGC', src: '/projects/seewo-digital-literacy.webp', gallery: 'literacy' },
   { brand: 'MBA 智库', title: 'MBA 智库 App', detail: '课堂 · 百科 · 文档 · 商学院', src: '/projects/mba-app.webp', gallery: 'mba' },
@@ -206,7 +206,7 @@ function ProjectDetail({ project, onClose }: { project: (typeof projectShowcases
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
   }, [onClose])
-  return <motion.article className="project-detail" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} role="dialog" aria-modal="true" aria-label={`${project.title}项目详情`}><header className="project-detail__bar"><p>{project.brand}</p><button type="button" onClick={onClose} aria-label="关闭项目详情"><X size={20} aria-hidden="true" /></button></header><div className="project-detail__intro"><p className="section-label">Project Case Study</p><h2>{project.title}</h2><p>{project.detail}</p></div><div className="project-detail__gallery">{images.map((source, index) => <img key={source} src={source} alt={`${project.title}设计画面 ${index + 1}`} loading={index < 2 ? 'eager' : 'lazy'} decoding="async" />)}</div></motion.article>
+  return <motion.article className="project-detail" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} role="dialog" aria-modal="true" aria-label={`${project.title}项目详情`}><header className="project-detail__bar"><p>{project.brand}</p><button type="button" onClick={onClose} aria-label="关闭项目详情"><X size={20} aria-hidden="true" /></button></header><div className="project-detail__intro"><p className="section-label">Project Case Study</p><h2>{project.title}</h2><p>{project.detail}</p>{project.website && <div className="project-detail__website"><span>官方网站</span><a href={project.website} target="_blank" rel="noopener noreferrer" aria-label={`打开 ${project.brand} 官方网站（新标签页）`}>{project.website}<ArrowUpRight size={16} aria-hidden="true" /></a></div>}</div><div className="project-detail__gallery">{images.map((source, index) => <img key={source} src={source} alt={`${project.title}设计画面 ${index + 1}`} loading={index < 2 ? 'eager' : 'lazy'} decoding="async" />)}</div></motion.article>
 }
 
 function ProjectShowcase() {

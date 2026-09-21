@@ -805,6 +805,20 @@
 
 .project-detail__intro .section-label { margin-bottom: 1rem; }
 
+.project-detail__website {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: .4rem .8rem;
+  margin-top: 1.25rem;
+  font-size: .85rem;
+  line-height: 1.7;
+}
+.project-detail__website > span { color: hsl(var(--muted)); }
+.project-detail__website a { min-width: 0; color: #225cff; overflow-wrap: anywhere; text-decoration: underline; text-underline-offset: .2em; }
+.project-detail__website svg { display: inline-block; margin-left: .3rem; vertical-align: middle; }
+.project-detail__website a:focus-visible { outline: 2px solid #225cff; outline-offset: 4px; }
+
 .project-detail__intro h2 {
   max-width: 60rem;
   margin: 0;
