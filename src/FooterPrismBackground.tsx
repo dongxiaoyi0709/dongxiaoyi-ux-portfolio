@@ -8,7 +8,7 @@ type PrismState = 'idle' | 'loading' | 'ready' | 'fallback'
 export default function PrismBackground() {
   // Use the existing mobile layout breakpoint, plus touch-only devices in landscape.
   // Static mode never mounts a canvas, imports WebGPU, or requests a video.
-  const staticOnly = useMediaQuery('(max-width: 720px), (hover: none) and (pointer: coarse), (prefers-reduced-motion: reduce)')
+  const staticOnly = useMediaQuery('(max-width: 767px), (hover: none) and (pointer: coarse), (prefers-reduced-motion: reduce)')
 
   if (staticOnly) {
     return <div className="prism-background prism-background--static">

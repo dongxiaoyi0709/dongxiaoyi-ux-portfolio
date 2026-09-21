@@ -5,9 +5,9 @@ import { Document, Page, pdfjs } from 'react-pdf'
 import pdfWorkerUrl from 'pdfjs-dist/build/pdf.worker.min.mjs?url'
 import './PdfReader.css'
 
-// Keep the worker URL tied to the runtime version so a browser cannot reuse a
-// worker cached by an older deployment after pdfjs-dist is upgraded.
-pdfjs.GlobalWorkerOptions.workerSrc = `${pdfWorkerUrl}?pdfjs=${pdfjs.version}`
+// Vite resolves this asset from React-PDF's own PDF.js dependency and emits a
+// versioned, content-hashed filename. A query string cannot fix mismatched code.
+pdfjs.GlobalWorkerOptions.workerSrc = pdfWorkerUrl
 
 type PdfArticle = {
   title: string

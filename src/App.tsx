@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { ArrowUpRight, Mail, Phone, X } from 'lucide-react'
 import { gsap } from 'gsap'
@@ -20,8 +20,6 @@ import PrismBackground from './FooterPrismBackground'
 import SparklesText from './SparklesText'
 import './App.css'
 
-const PdfReader = lazy(() => import('./PdfReader'))
-
 const sharingPhotos = [
   { src: sharingPhoto1, alt: '希沃信鸽设计分享现场' },
   { src: sharingPhoto2, alt: 'AIGC 主题设计分享现场' },
@@ -31,9 +29,9 @@ const sharingPhotos = [
 
 const sharingArticles = [
   {
-    title: 'AI 设计师工作流',
+    title: 'AI 时代设计师的能力升级',
     cover: aiWorkflowCover,
-    pdf: '/sharing/ai-designer-workflow.pdf',
+    pdf: '/sharing/ai-designer-workflow.pdf?v=a9d7cc6d4c47',
     prependImages: [
       { src: aiWorkflowIntro, alt: 'AI 设计师工作流封面' },
       { src: aiWorkflowProcess, alt: 'UX Workflow 与 AI Capability System 工作思路' },
@@ -41,9 +39,9 @@ const sharingArticles = [
     ],
   },
   { title: '体验度量与数据分析', cover: experienceMetricsCover, pdf: '/sharing/experience-measurement-data-analysis.pdf' },
-  { title: '提升设计系统的规范化思维', cover: designSystemCover, pdf: '/sharing/design-system-standardization.pdf' },
-  { title: 'UX 文案设计', cover: uxWritingCover, pdf: '/sharing/ux-writing-design.pdf' },
-  { title: '设计与认知心理学', cover: cognitivePsychologyCover, pdf: '/sharing/design-cognitive-psychology.pdf' },
+  { title: '提升设计系统的规范化思维', cover: designSystemCover, pdf: '/sharing/design-system-standardization.pdf?v=439900094c47' },
+  { title: 'UX 文案设计', cover: uxWritingCover, pdf: '/sharing/ux-writing-design.pdf?v=fac4abccc442' },
+  { title: '设计与认知心理学', cover: cognitivePsychologyCover, pdf: '/sharing/design-cognitive-psychology.pdf?v=a4a418ff0067' },
 ]
 
 const projects = [
@@ -223,27 +221,27 @@ function Journal() {
 }
 
 function DesignSharing() {
-  const [activeArticle, setActiveArticle] = useState<(typeof sharingArticles)[number] | null>(null)
-  return <><section id="sharing" className="content-section sharing-section">
+  return <section id="sharing" className="content-section sharing-section">
     <SectionTitle eyebrow="Design Sharing" title="设计分享" subtext="有价值的经验总结，为团队赋能" />
     <div className="sharing-articles">
-      {sharingArticles.map((article, index) => <motion.button
-        type="button"
+      {sharingArticles.map((article, index) => <motion.a
+        target="_blank"
+        rel="noopener noreferrer"
         key={article.pdf}
         className="sharing-article"
-        onClick={() => setActiveArticle(article)}
-        aria-label={`在作品集中阅读《${article.title}》`}
+        href={article.pdf}
+        aria-label={`在新标签页打开《${article.title}》PDF`}
         initial={{ opacity: 0, y: 22 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: .55, delay: index * .06 }}
         viewport={{ once: true, margin: '-60px' }}
       >
         <img src={article.cover} alt={`${article.title}文章封面`} loading="lazy" decoding="async" />
-      </motion.button>)}
+      </motion.a>)}
     </div>
     <p className="sharing-moments-label">Sharing moments</p>
     <div className="sharing-gallery">{sharingPhotos.map((photo, index) => <motion.figure key={photo.src} className="sharing-photo" initial={{ opacity: 0, y: 22 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: .55, delay: index * .07 }} viewport={{ once: true, margin: '-60px' }}><img src={photo.src} alt={photo.alt} /></motion.figure>)}</div>
-  </section><AnimatePresence>{activeArticle && <Suspense fallback={<div className="pdf-reader pdf-reader--loading" role="status"><p className="pdf-reader__status">正在准备站内阅读器…</p></div>}><PdfReader article={activeArticle} onClose={() => setActiveArticle(null)} /></Suspense>}</AnimatePresence></>
+  </section>
 }
 
 function Contact() {

@@ -78,11 +78,11 @@ function CompatibilityVideo({ mobile }: { mobile: boolean }) {
 
 export default function PrismVideoFallback({ enabled }: { enabled: boolean }) {
   // Match the hero's existing framing breakpoint, not a particular phone model.
-  const mobile = useMediaQuery('(max-width: 720px)')
+  const mobile = useMediaQuery('(max-width: 1099px)')
   const reducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)')
   return <div className="prism-background__fallback">
     <picture>
-      <source media="(max-width: 720px)" srcSet="/hero/prism-mobile-poster.jpg" />
+      <source media="(max-width: 1099px)" srcSet="/hero/prism-mobile-poster.jpg" />
       <img className="prism-background__poster" src="/hero/prism-desktop-poster.jpg" alt="" />
     </picture>
     {enabled && !reducedMotion && <CompatibilityVideo key={String(mobile)} mobile={mobile} />}

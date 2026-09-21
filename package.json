@@ -7,7 +7,7 @@
     "dev": "vite",
     "prebuild": "npm run test:shaders && rm -rf dist",
     "build": "tsc -b && vite build",
-    "postbuild": "mkdir -p dist/server && cp src/sites-worker.js dist/server/index.js",
+    "postbuild": "node scripts/check-pdf-build.mjs && mkdir -p dist/server && cp src/sites-worker.js dist/server/index.js",
     "lint": "oxlint",
     "test:shaders": "node --test scripts/prism-shaders.test.mjs",
     "preview": "vite preview"

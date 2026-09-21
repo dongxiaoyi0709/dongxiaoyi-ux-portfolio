@@ -2,7 +2,7 @@
 @import 'tailwindcss';
 
 :root {
-  --bg: 0 0% 100%; --surface: 0 0% 100%; --text: 225 9% 8%; --muted: 0 0% 40%; --stroke: 0 0% 88%; --accent: 225 9% 8%;
+  --bg: 0 0% 98.039216%; --surface: 0 0% 100%; --text: 225 9% 8%; --muted: 0 0% 40%; --stroke: 0 0% 88%; --accent: 225 9% 8%;
   --font-body: 'Inter', sans-serif; --font-display: 'Instrument Serif', Georgia, serif; --font-hero: 'Sora', 'Inter', sans-serif;
   color: hsl(var(--text)); background: hsl(var(--bg)); font-family: var(--font-body); font-synthesis: none; text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
 }
